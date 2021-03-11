@@ -1,9 +1,9 @@
 <template>
 	<div class="console">
-		<!-- Serverless 简单实践，基于 -->
-	<!-- 	<a href="https://uniapp.dcloud.io/uniCloud/README" target="_blank">uniCloud</a>
-		<a href="https://element.eleme.cn/#/zh-CN" target="_blank">Element</a> -->
-	<!-- 	<p><a href="https://github.com/aaa391621/uni-cloud-element-admin" target="_blank">前往 github</a></p> -->
+		Serverless 简单实践，基于
+		<a href="https://uniapp.dcloud.io/uniCloud/README" target="_blank">uniCloud</a>
+		<a href="https://element.eleme.cn/#/zh-CN" target="_blank">Element</a>
+		<p><a href="https://github.com/luchengpei/unicloud-cms.git" target="_blank">前往 github</a></p>
 	</div>
 </template>
 

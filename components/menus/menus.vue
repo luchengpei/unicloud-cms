@@ -28,53 +28,20 @@
 						show:true
 					},
 					{
-						name: '商品管理',
-						index: 'goodsManag',
-						icon: 'el-icon-s-shop',
-						show:user.isGoods,
-						children: [{
-							name: '商品列表',
-							index: 'goodsManag'
-						}, {
-							name: '商品分类',
-							index: 'Category'
-						}]
-					},
-					{
-						name: '订单管理',
-						index: 'order',
-						icon: 'el-icon-s-order',
-						show:user.isOrder,
-						children: [{
-							name: '商品订单',
-							index: 'getOrder'
-						}]
-					},
-					{
 						name: '文章管理',
-						index: 'article',
+						index: 'Category',
 						icon: 'el-icon-document-copy',
-						index: 'article',
-						show:user.isText,
-					},
-					{
-						name: '角色管理',
-						index: 'roleManag',
-						icon: 'el-icon-user-solid',
-						children: [{
-							name: '角色管理',
-							index: 'roleManag'
-						}]
-					},
-					{
-						name: '系统设置',
-						index: 'roleManag1',
-						icon: 'el-icon-s-tools',
-						show:user.isAdminof,
-						children: [{
-							name: '管理员',
-							index: 'roleManag'
-						}]
+						show:true,
+						children:[
+							{
+								name: '文章分类',
+								index: 'Category',
+							},
+							{
+								name:'文章列表',
+								index:'articleList'
+							}
+						]
 					}
 				]
 			}

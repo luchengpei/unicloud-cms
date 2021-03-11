@@ -2,19 +2,19 @@
 	<div class="Category-box">
 		<div class="h-box">
 			<div class="b-box" @click="addCBtn()">
-				<el-button type="primary">添加商品分类</el-button>
+				<el-button type="primary">添加文章分类</el-button>
 			</div>
 		</div>
 		<div class="table-box">
 			<template>
 				<el-table :data="tableData" border style="width: 100%">
-					<el-table-column prop="sort" label="序号" width="50">
+					<el-table-column prop="sort" label="序号" width="50" header-align="center" align="center">
 					</el-table-column>
-					<el-table-column prop="CategoryName" label="商品分类名称" width="120">
+					<el-table-column prop="CategoryName" label="文章分类名称" width="120" header-align="center" align="center">
 					</el-table-column>
-					<el-table-column prop="CNickname" label="商品分类简称" width="120">
+					<el-table-column prop="CNickname" label="文章分类简称" width="120" header-align="center" align="center">
 					</el-table-column>
-					<el-table-column prop="thumbnail" label="缩略图" width="65">>
+					<el-table-column prop="thumbnail" label="缩略图" width="65" header-align="center" align="center">
 						<template slot-scope="scope">
 							<el-popover placement="right" trigger="hover">
 								<img :src="scope.row.thumbnail" style="max-height: 300px;max-width: 500px" />
@@ -22,33 +22,38 @@
 							</el-popover>
 						</template>
 					</el-table-column>
-					<el-table-column prop="Pid" label="Pid">
+					<!-- <el-table-column prop="Pid" label="Pid">
+					</el-table-column> -->
+					<el-table-column prop="_id" label="分类id" header-align="center" align="center">
 					</el-table-column>
-					<el-table-column prop="_id" label="分类id">
-					</el-table-column>
-					<el-table-column prop="showOrhide" label="是否显示" width="80">
+					<el-table-column prop="showOrhide" label="是否显示" width="80" header-align="center" align="center">
 						<template slot-scope="scope">
-							<el-switch v-model="scope.row.showOrhide" active-color="#13ce66" inactive-color="#ff4949" @change="changeBtn6(scope.row)"
-							 :disabled="disabled">
+							<el-switch  v-model="scope.row.showOrhide" active-color="#13ce66" inactive-color="#ff4949" @change="changeShow(scope.row)">
+								
 							</el-switch>
 						</template>
 					</el-table-column>
-					<el-table-column label="操作" width="60">
+					<el-table-column label="操作" min-width="60" header-align="center" align="center">
 						<template slot-scope="scope">
-							<!-- <el-button type="text" size="small" @click="articleOperate('edit',scope.row)">编辑</el-button> -->
+							<el-button type="text" size="small" @click="edit(scope.row)">编辑</el-button>
 							<el-button @click.native="delCategory(scope.row._id)" type="text" size="small" style="color: red;">删除</el-button>
 						</template>
 					</el-table-column>
 				</el-table>
 			</template>
 		</div>
-		<div class="block">
-			<!-- <span class="demonstration">完整功能</span> -->
-			<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="currentPage"
-			 :page-sizes="[5, 10, 20, 50,100]" :page-size="limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
-			</el-pagination>
-		</div>
-		<CategoryAdd ref="isShowC" :CategoryList="CategoryList"></CategoryAdd>
+		 <div class="block">
+		    <el-pagination
+		      @size-change="handleSizeChange"
+		      @current-change="handleCurrentChange"
+		      :current-page.sync="currentPage"
+		      :page-sizes="[1, 2, 3, 10,50]"
+		      :page-size="pageSize"
+		      layout="total, sizes, prev, pager, next, jumper"
+		      :total="total">
+		    </el-pagination>
+		  </div>
+		<CategoryAdd ref="isShowC" ></CategoryAdd>
 	</div>
 </template>
 
@@ -59,16 +64,9 @@
 			return {
 				tableData: [],
 				currentPage: 1,
-				limit: 5,
+				pageSize: 3,
 				total: 0,
-				Cmsge: false,
-				clickNum: 0,
-				CategoryList: [],
-				disabled: false
 			}
-		},
-		created() {
-
 		},
 		components: {
 			CategoryAdd
@@ -78,107 +76,91 @@
 		},
 		methods: {
 			handleSizeChange(val) {
-				if (this.clickNum == 0) {
-					this.limit = val
-					this.currentPage = 1;
-					this.getCategory()
-				}
-				if (this.clickNum == 1) {
-					this.limit = val
-					this.currentPage = 1;
-					this.getCategory()
-				}
-				//console.log(val)
-			},
-			handleCurrentChange(val) {
-				if (this.clickNum == 0) {
-					this.page = val
-					this.getCategory()
-				}
-				if (this.clickNum == 1) {
-					this.page = val
-					this.getCategory()
-				}
-			},
-			addCBtn() {
-				this.Cmsge = true;
-				this.$refs.isShowC.initBtn(this.Cmsge);
-			},
-			fatherMethodS() {
+				this.pageSize = val
+				this.currentPage = 1
 				this.getCategory()
 			},
+			handleCurrentChange(val) {
+				this.currentPage = val
+				this.getCategory()
+			},
+			//添加
+			addCBtn() {
+				this.$refs.isShowC.initBtn();
+			},
+			//获取分类列表
 			getCategory() {
-				var data = {};
-				data.page = this.currentPage;
-				data.limit = this.limit;
 				uni.showLoading({
 					title: '处理中...'
 				})
-				this.$api.getCategory(data).then((res) => {
+				uniCloud.callFunction({
+					name:'add-article-category',
+					data:{
+						action:'get',
+						page:this.currentPage,
+						pageSize:this.pageSize
+					}
+				}).then(res=>{
+					uniCloud.callFunction({
+						name:"add-article-category",
+						data:{
+							action:'total'
+						},
+						success: (total) => {
+							this.total = total.result.data.length
+						}
+					})
 					uni.hideLoading()
-					for (var i = 0; i < res.data.length; i++) {
-						res.data[i].sort = i + 1
-						if (res.data[i].Pid != 0) {
-							res.data[i].CategoryName = "   |——" + res.data[i].CategoryName
+					res.result.data.forEach((row,index)=>res.result.data[index].sort = index+1)
+					this.tableData = res.result.data
+					
+				})
+			},
+			//是否显示
+			changeShow(item){
+				uniCloud.callFunction({
+					name:'add-article-category',
+					data:{
+						action:'edit',
+						params:{
+							showOrhide:item.showOrhide,
+							_id:item._id
 						}
 					}
-					this.total = res.total
-					this.tableData = res.data
-				}).catch((err) => {
-					uni.hideLoading()
-					console.error(err)
-				})
-			},
-			changeBtn6(e) {
-				var data = {}
-				data.id = e._id
-				data.showOrhide = e.showOrhide
-				uni.hideLoading()
-				this.disabled = true
-				this.$api.showOrhide(data).then((res) => {
-					uni.hideLoading()
-					console.log(res)
-					this.disabled = false
+				}).then(res=>{
 					this.$message({
 						type: 'success',
-						message: res.msg,
-						duration: 800,
-						offset: 200,
-					})
-					this.getCategory()
-				}).catch((err) => {
-					uni.hideLoading()
-					this.disabled = false
-					console.error(err)
-					this.$message({
-						type: 'error',
-						message: res.msg,
-						duration: 800,
-						offset: 200,
+						message: '操作成功',
+						duration: 1500
 					})
 				})
 			},
+			//编辑
+			edit(item){
+				this.$refs.isShowC.initBtn(item._id);
+			},
+			//删除
 			delCategory(e) {
-				var data = {}
-				data._id = e
-				this.$api.delCategory(data).then((res) => {
-					uni.hideLoading()
-					console.log(res)
-					this.disabled = false
+				uniCloud.callFunction({
+					name:'add-article-category',
+					data:{
+						action:'delete',
+						id:e
+					}
+				}).then(res=>{
 					this.$message({
 						type: 'success',
-						message: res.msg,
+						message: '删除成功',
 						duration: 800,
 						offset: 200,
+						onClose:()=>{
+							this.getCategory()
+						}
 					})
-					this.getCategory()
-				}).catch((err) => {
-					uni.hideLoading()
-					this.disabled = false
-					console.error(err)
+				}).catch(err=>{
 					this.$message({
 						type: 'error',
-						message: res.msg,
+						message: '删除失败',
 						duration: 800,
 						offset: 200,
 					})

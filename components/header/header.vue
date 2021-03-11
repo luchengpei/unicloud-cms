@@ -7,6 +7,7 @@
 			</el-col>
 			<el-col :span="6" align="right">
 				<el-dropdown trigger="click" class="user-name" @command="handleCommand">
+					<el-avatar size="large" :src="user.avatarUrl"></el-avatar>
 					<span class="el-dropdown-link">
 						{{user.username}}<i class="el-icon-caret-bottom el-icon--right"></i>
 					</span>
@@ -51,5 +52,11 @@
 
 	.user-name {
 		margin-left: 20px;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		.el-dropdown-link{
+			margin: 0 10px;
+		}
 	}
 </style>

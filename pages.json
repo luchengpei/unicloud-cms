@@ -5,11 +5,17 @@
 			"style": {
 				"titleNView": false
 			}
-		}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"titleNView": false
+			}
+		} 
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "cms",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	}

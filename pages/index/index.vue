@@ -9,11 +9,9 @@
 			</el-header>
 			<el-main>
 				<Index v-if="currentPage === 'index'" />
-				<!-- <Article v-if="currentPage === 'article'" />
-				<roleManag v-if="currentPage === 'roleManag'"></roleManag>
-				<GoodsManag v-if="currentPage==='goodsManag'"></GoodsManag>
+				<articleList v-if="currentPage === 'articleList'" />
+				<!-- <roleManag v-if="currentPage === 'roleManag'"></roleManag> -->
 				<Category v-if="currentPage==='Category'"></Category>
-				<getOrder v-if="currentPage==='getOrder'"></getOrder> -->
 			</el-main>
 		</el-container>
 	</el-container>
@@ -21,55 +19,39 @@
 
 <script>
 	import {
-		mapState
+		mapState,
+		user
 	} from 'vuex'
 	import Menus from '@/components/menus/menus'
 	import Headers from '@/components/header/header'
 	import Index from '@/components/page/index'
-	// import Article from '@/components/page/article'
+	import articleList from '@/components/page/articleList'
 	// import roleManag from '@/components/page/roleManag'
-	// import GoodsManag from '@/components/page/goodsManag'
-	// import Category from '@/components/page/Category'
-	// import getOrder from '@/components/page/order'
+	import Category from '@/components/page/Category'
 	export default {
 		data() {
 			return {
 				isRouterAlive: true,
 				currentPage: 'index',
-				user:{
-					Enable: 1,
-					Pid: 0,
-					adminName: "大管理",
-					delete_date: "0",
-					isAdminof: true,
-					isGoods: true,
-					isOrder: true,
-					isText: true,
-					password: "123456",
-					username: "admin",
-					_id: "60481c9a48c73c00014d3116",
-				}
 			}
 		},
 		computed: {
-			...mapState([ 'isCollapse'])
+			...mapState(['user','isCollapse'])
 		},
 		components: {
 			Menus,
 			Headers,
 			Index,
-			// Article,
+			articleList,
 			// roleManag,
-			// GoodsManag,
-			// Category,
-			// getOrder
+			Category,
 		},
 		onLoad() {
-			// if (!this.user._id) {
-			// 	uni.redirectTo({
-			// 		url: '../login/login'
-			// 	})
-			// }
+			if (!this.user._id) {
+				uni.redirectTo({
+					url: '../login/login'
+				})
+			}
 		},
 		methods: {
 			openPage(page) {
