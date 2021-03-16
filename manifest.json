@@ -71,6 +71,7 @@
     "h5" : {
         "router" : {
             "base" : "/unicloud-ums/"
-        }
+        },
+        "template" : "static/index.html"
     }
 }

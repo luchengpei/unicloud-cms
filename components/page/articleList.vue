@@ -98,8 +98,9 @@
 			//新增编辑
 			handleBtn(type, item) {
 				this.visible = true;
+				let params = JSON.parse(JSON.stringify(item))
 				this.$nextTick(() => {
-					this.$refs.addAticle.init(type, item)
+					this.$refs.addAticle.init(type, params)
 				})
 			},
 			//删除
