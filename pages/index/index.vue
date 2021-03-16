@@ -5,7 +5,7 @@
 		</el-aside>
 		<el-container>
 			<el-header>
-				<headers :user="user" :isCollapse="isCollapse" />
+				<headers :user="user" :isCollapse="isCollapse"/>
 			</el-header>
 			<el-main>
 				<Index v-if="currentPage === 'index'" />

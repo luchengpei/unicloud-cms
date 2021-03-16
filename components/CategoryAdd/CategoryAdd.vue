@@ -128,7 +128,7 @@
 					if(action!='detail'){
 						this.uploading = false
 						this.dialogFormVisible = false
-						this.$parent.fatherMethodS();
+						// this.$parent.fatherMethodS();
 						this.$message({
 							showClose: true,
 							message: '操作成功',
