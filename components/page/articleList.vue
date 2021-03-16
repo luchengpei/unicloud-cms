@@ -98,9 +98,9 @@
 			//新增编辑
 			handleBtn(type, item) {
 				this.visible = true;
-				let params = JSON.parse(JSON.stringify(item))
+				if(item) item = JSON.parse(JSON.stringify(item))
 				this.$nextTick(() => {
-					this.$refs.addAticle.init(type, params)
+					this.$refs.addAticle.init(type, item)
 				})
 			},
 			//删除

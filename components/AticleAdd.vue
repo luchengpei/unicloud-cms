@@ -30,6 +30,7 @@
 
 <script>
 	import WangEditor from './WangEditor.vue'
+	import { timeFormat } from 'utils/time.js'
 	export default {
 		name: "AticleAdd",
 		components: {
@@ -144,7 +145,7 @@
 						if(this.type=='add'){
 							let params = {
 								...this.form,
-								createTime: Date.now(),
+								createTime: timeFormat(new Date()),
 								preViewNum: 0,
 								collectionNum: 0,
 								isSelect: false
